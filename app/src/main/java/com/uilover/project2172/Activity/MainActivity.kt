@@ -1,5 +1,6 @@
 package com.uilover.project2172.Activity
 import android.app.AlertDialog
+import android.content.Intent
 import android.util.Log
 import android.os.Bundle
 import android.view.WindowManager
@@ -49,7 +50,6 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "请输入城市名", Toast.LENGTH_SHORT).show()
             }
         }
-
         /*binding.chipNavigator.setOnItemSelectedListener { id ->
             when (id) {
                 R.id.explorer -> {
@@ -71,9 +71,13 @@ class MainActivity : AppCompatActivity() {
                         showAdviceDialog(advice)
                     }
                 }
+                R.id.bookmark -> {
+                    val intent = Intent(this, MemoActivity::class.java)
+                    startActivity(intent)
+                }
             }
-        }
 
+        }
         window.setFlags(
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
@@ -84,6 +88,7 @@ class MainActivity : AppCompatActivity() {
 
         // 获取默认城市天气
         fetchWeather("Tokyo")
+
     }
 
     private fun initRecyclerviewHourly(city: String) {
