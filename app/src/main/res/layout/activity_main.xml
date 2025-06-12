@@ -32,6 +32,7 @@
             android:orientation="vertical"
             android:paddingBottom="100dp">
 
+            <!-- 搜索框区域 -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -76,23 +77,49 @@
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <!-- 城市名 -->
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/cityText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="24dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp"
+                android:text="City"
+                android:textColor="@color/white"
+                android:textSize="26sp"
+                android:textStyle="bold" />
+
+            <!-- 当前温度 -->
+            <TextView
+                android:id="@+id/tempText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
                 android:text="25°C"
                 android:textColor="@color/white"
                 android:textSize="70sp"
                 android:textStyle="bold" />
 
+            <!-- 天气描述 -->
+            <TextView
+                android:id="@+id/descText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="4dp"
+                android:text="Weather Description"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <!-- 天气图标与参数 -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="24dp">
 
                 <ImageView
-                    android:id="@+id/imageView2"
+                    android:id="@+id/iconImage"
                     android:layout_width="170dp"
                     android:layout_height="170dp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -106,25 +133,21 @@
                     android:layout_marginStart="24dp"
                     android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/imageView2"
+                    app:layout_constraintStart_toEndOf="@+id/iconImage"
                     app:layout_constraintTop_toTopOf="parent">
 
+                    <!-- 风速 -->
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_weight="0.33"
                         android:orientation="vertical">
-
-                        <TextView
-
-                            android:layout_width="match_parent"
+                        <TextView android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Wind Speed"
                             android:textColor="@color/white"
                             android:textSize="13sp" />
-
-                        <TextView
-                            android:id="@+id/textView3"
+                        <TextView android:id="@+id/textView3"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="12 km/h"
@@ -133,23 +156,19 @@
                             android:textStyle="bold" />
                     </LinearLayout>
 
+                    <!-- 湿度 -->
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_weight="0.33"
                         android:orientation="vertical">
-
-                        <TextView
-
+                        <TextView android:id="@+id/humidityText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Humidity"
                             android:textColor="@color/white"
                             android:textSize="13sp" />
-
-                        <TextView
-
-                            android:layout_width="match_parent"
+                        <TextView android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="18%"
                             android:textColor="@color/white"
@@ -157,23 +176,18 @@
                             android:textStyle="bold" />
                     </LinearLayout>
 
+                    <!-- 降水 -->
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_weight="0.33"
                         android:orientation="vertical">
-
-                        <TextView
-
-                            android:layout_width="match_parent"
+                        <TextView android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Rain"
                             android:textColor="@color/white"
                             android:textSize="13sp" />
-
-                        <TextView
-
-                            android:layout_width="match_parent"
+                        <TextView android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="22%"
                             android:textColor="@color/white"
@@ -183,6 +197,7 @@
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <!-- 今日标签 -->
             <TextView
                 android:id="@+id/textView4"
                 android:layout_width="match_parent"
@@ -193,6 +208,7 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
+            <!-- 小时预报列表 -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/view1"
                 android:layout_width="match_parent"
@@ -201,6 +217,7 @@
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp" />
 
+            <!-- 城市标题 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -222,8 +239,6 @@
                     android:id="@+id/textView5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
-
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="24dp"
                     android:text="View all"
@@ -231,6 +246,7 @@
                     android:textSize="16sp" />
             </LinearLayout>
 
+            <!-- 城市天气 RecyclerView -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/view2"
                 android:layout_width="match_parent"
@@ -241,6 +257,7 @@
         </LinearLayout>
     </ScrollView>
 
+    <!-- 底部导航栏 -->
     <com.ismaeldivita.chipnavigation.ChipNavigationBar
         android:id="@+id/chipNavigator"
         android:layout_width="match_parent"
