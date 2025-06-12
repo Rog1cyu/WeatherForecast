@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
             val city = binding.editTextText.text.toString().trim()
             if (city.isNotEmpty()) {
                 fetchWeather(city)
+                initRecyclerviewHourly(city)
             } else {
                 Toast.makeText(this, "请输入城市名", Toast.LENGTH_SHORT).show()
             }
@@ -43,24 +44,50 @@ class MainActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         )
 
-        initRecyclerviewHourly()
+        initRecyclerviewHourly("Tokyo")
         initRecyclerOtherCity()
 
         // 获取默认城市天气
-        fetchWeather("Beijing")
+        fetchWeather("Tokyo")
     }
 
-    private fun initRecyclerviewHourly() {
-        val items = arrayListOf(
-            HourlyModel("9 pm", 28, "cloudy"),
-            HourlyModel("10 pm", 29, "sunny"),
-            HourlyModel("11 pm", 30, "windy"),
-            HourlyModel("12 pm", 31, "cloudy_2"),
-            HourlyModel("1 am", 10, "snowy")
-        )
-
+    private fun initRecyclerviewHourly(city: String) {
+        val items = ArrayList<HourlyModel>()
+        val adapter = HourlyAdapter(items)
         binding.view1.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        binding.view1.adapter = HourlyAdapter(items)
+        binding.view1.adapter = adapter
+
+        lifecycleScope.launch {
+            try {
+                val response = withContext(Dispatchers.IO) {
+                    RetrofitClient.weatherApi.getHourlyForecastByCity(city, apiKey)
+                }
+
+                val firstHours = response.list.take(6) // 取前6个3小时预测项
+                for (item in firstHours) {
+                    val hour = item.dt_txt.substring(11, 16) // 格式 "15:00"
+                    val temp = item.main.temp.toInt()
+                    val icon = item.weather[0].icon
+
+                    val picPath = when {
+                        icon.contains("d") && icon.startsWith("01") -> "sunny"
+                        icon.contains("n") && icon.startsWith("01") -> "night"
+                        icon.startsWith("02") || icon.startsWith("03") -> "cloudy"
+                        icon.startsWith("09") || icon.startsWith("10") -> "rainy"
+                        icon.startsWith("13") -> "snowy"
+                        else -> "cloudy"
+                    }
+
+                    items.add(HourlyModel(hour, temp, picPath))
+                    adapter.notifyItemInserted(items.size - 1)
+                }
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Log.e("WeatherError", "错误: ${e.message}")
+                Toast.makeText(this@MainActivity, "小时天气加载失败", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun initRecyclerOtherCity() {

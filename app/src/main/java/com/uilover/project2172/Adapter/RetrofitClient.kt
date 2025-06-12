@@ -8,7 +8,6 @@ import java.util.concurrent.TimeUnit
 object RetrofitClient {
     private const val BASE_URL = "https://api.openweathermap.org/"
 
-    // 🚀 设置更长的超时时间，解决 read timeout
     private val okHttpClient = OkHttpClient.Builder()
         .connectTimeout(15, TimeUnit.SECONDS)
         .readTimeout(30, TimeUnit.SECONDS)
